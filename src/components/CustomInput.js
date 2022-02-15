@@ -11,7 +11,7 @@ const CustomInput = (props) => {
         onChange={props.onChange}
         onBlur={props.onBlur}
       />
-      {props.isInValid && <p className="error-text">{props.errorText}</p>}
+      {props.error && <p className="error-text">{props.errorText}</p>}
     </Fragment>
   );
 };

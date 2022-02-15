@@ -1,11 +1,12 @@
 import { useState } from "react";
-const useInput = (type) => {
+
+const useInput = (validatorFn) => {
   const [enteredValue, setEnteredValue] = useState("");
   const [inputTouched, setInputTouched] = useState(false);
 
-  const enteredValueIsValid =
-    type === "email" ? enteredValue.includes("@") : enteredValue.trim() !== "";
-  const inputValueIsInValid = !enteredValueIsValid && inputTouched;
+  const enteredValueIsValid = validatorFn(enteredValue);
+
+  const hasError = !enteredValueIsValid && inputTouched;
 
   const inputChangeHandler = (event) => {
     setEnteredValue(event.target.value);
@@ -15,14 +16,18 @@ const useInput = (type) => {
     setInputTouched(true);
   };
 
+  const reset = () => {
+    setEnteredValue("");
+    setInputTouched(false);
+  };
+
   return {
-    enteredValue,
-    setEnteredValue,
-    setInputTouched,
-    enteredValueIsValid,
-    inputValueIsInValid,
+    value: enteredValue,
+    isValid: enteredValueIsValid,
+    error: hasError,
     inputChangeHandler,
-    inputBlurHandler
+    inputBlurHandler,
+    reset
   };
 };
 
