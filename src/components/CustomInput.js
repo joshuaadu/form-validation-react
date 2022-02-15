@@ -1,7 +1,6 @@
 import { Fragment } from "react";
 
 const CustomInput = (props) => {
-  
   return (
     <Fragment>
       <label htmlFor={props.id}>{props.labelText}</label>

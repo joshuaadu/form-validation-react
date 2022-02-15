@@ -11,15 +11,26 @@ const SimpleInput = (props) => {
     inputChangeHandler: nameInputChangeHandler,
     inputBlurHandler: nameInputBlurHandler
   } = useInput();
+  const {
+    enteredValue: enteredEmail,
+    setEnteredValue: setEnteredEmail,
+    setInputTouched: setEmailInputTouched,
+    enteredValueIsValid: enteredEmailIsValid,
+    inputValueIsInValid: emailInputIsInValid,
+    inputChangeHandler: emailInputChangeHandler,
+    inputBlurHandler: emailInputBlurHandler
+  } = useInput();
 
   const submitHandler = (event) => {
     event.preventDefault();
 
-    if (!enteredNameIsValid) {
+    if (!enteredNameIsValid || !enteredEmailIsValid) {
       return;
     }
     setEnteredName("");
+    setEnteredEmail("");
     setNameInputTouched(false);
+    setEmailInputTouched(false);
   };
 
   return (
@@ -34,6 +45,16 @@ const SimpleInput = (props) => {
           onBlur={nameInputBlurHandler}
           errorText="Name must not be empty"
           isInValid={nameInputIsInValid}
+        />
+        <CustomInput
+          type="email"
+          id="email"
+          labelText="Your Email"
+          value={enteredEmail}
+          onChange={emailInputChangeHandler}
+          onBlur={emailInputBlurHandler}
+          errorText="Email must not be empty"
+          isInValid={emailInputIsInValid}
         />
       </div>
       <div className="form-actions">
