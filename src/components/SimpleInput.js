@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+// import { useEffect, useRef, useState } from "react";
 import CustomInput from "./CustomInput";
 import useInput from "./hooks/use-input";
 const SimpleInput = (props) => {
@@ -19,7 +19,7 @@ const SimpleInput = (props) => {
     inputValueIsInValid: emailInputIsInValid,
     inputChangeHandler: emailInputChangeHandler,
     inputBlurHandler: emailInputBlurHandler
-  } = useInput();
+  } = useInput("email");
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -46,6 +46,8 @@ const SimpleInput = (props) => {
           errorText="Name must not be empty"
           isInValid={nameInputIsInValid}
         />
+      </div>
+      <div className={`form-control ${emailInputIsInValid ? "invalid" : ""}`}>
         <CustomInput
           type="email"
           id="email"
@@ -53,7 +55,7 @@ const SimpleInput = (props) => {
           value={enteredEmail}
           onChange={emailInputChangeHandler}
           onBlur={emailInputBlurHandler}
-          errorText="Email must not be empty"
+          errorText="Email must not be in the format abc@xyz.com"
           isInValid={emailInputIsInValid}
         />
       </div>
