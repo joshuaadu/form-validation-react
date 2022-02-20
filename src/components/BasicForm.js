@@ -47,12 +47,18 @@ const BasicForm = (props) => {
           }
         }
       );
+      const data = await response.json();
+      const key = data.name;
+      console.log(key);
+      queryClient.setQueryData("contacts", (oldData) =>
+        Object.assign({ key: contact }, oldData)
+      );
 
-      return await response.json();
-    },
-    {
-      onSuccess: () => queryClient.invalidateQueries("contacts")
+      return data;
     }
+    // {
+    //   onSuccess: () => {queryClient.invalidateQueries("contacts")}
+    // }
   );
 
   const formIsValid = emailIsValid && firstNameIsValid && lastNameIsValid;
