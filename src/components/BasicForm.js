@@ -55,10 +55,12 @@ const BasicForm = (props) => {
       );
 
       return data;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("contacts");
+      }
     }
-    // {
-    //   onSuccess: () => {queryClient.invalidateQueries("contacts")}
-    // }
   );
 
   const formIsValid = emailIsValid && firstNameIsValid && lastNameIsValid;
