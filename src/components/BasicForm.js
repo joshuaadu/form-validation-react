@@ -1,3 +1,5 @@
+import { useMutation } from "react-query";
+
 import CustomInput from "./CustomInput";
 import useInput from "./hooks/use-input";
 
@@ -32,6 +34,21 @@ const BasicForm = (props) => {
     reset: emailReset
   } = useInput(isEmail);
 
+  const mutation = useMutation(async (contact) => {
+    const response = await fetch(
+      "https://react-form-fd387-default-rtdb.firebaseio.com/contact-list.json",
+      {
+        method: "POST",
+        body: JSON.stringify(contact),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
+
+    return await response.json();
+  });
+
   const formIsValid = emailIsValid && firstNameIsValid && lastNameIsValid;
 
   const submitHandler = (event) => {
@@ -39,9 +56,22 @@ const BasicForm = (props) => {
     if (!formIsValid) {
       return;
     }
-    firstNameReset("");
-    lastNameReset("");
-    emailReset("");
+    const newContact = {
+      name: `${firstNameValue} ${lastNameValue}`,
+      email: emailValue
+    };
+    mutation.mutate(newContact);
+    (async () => {
+      (await mutation.isSuccess)
+        ? console.log("Contact submitted!", mutation.data)
+        : console.log("Failed to submit!");
+    })();
+    // console.log(mutation);
+    if (mutation.isSuccess) {
+      firstNameReset("");
+      lastNameReset("");
+      emailReset("");
+    }
   };
   return (
     <form onSubmit={submitHandler}>
