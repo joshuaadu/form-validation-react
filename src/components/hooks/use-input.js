@@ -1,4 +1,4 @@
-import { useState, useReducer, useEffect } from "react";
+import { useReducer } from "react";
 
 const initialState = { value: "", istouched: false };
 const reducerFn = (state, action) => {

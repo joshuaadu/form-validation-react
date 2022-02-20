@@ -80,7 +80,6 @@ const BasicForm = (props) => {
         ? console.log("Contact submitted!", mutation.data)
         : console.log("Failed to submit!");
     })();
-    // console.log(mutation);
 
     firstNameReset("");
     lastNameReset("");

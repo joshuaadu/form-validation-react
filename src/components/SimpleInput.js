@@ -1,4 +1,3 @@
-// import { useEffect, useRef, useState } from "react";
 import CustomInput from "./CustomInput";
 import useInput from "./hooks/use-input";
 

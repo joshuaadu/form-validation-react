@@ -1,8 +1,6 @@
-import { useState } from "react";
 import { useQuery } from "react-query";
 
 const useSendRequest = () => {
-  // const [contactList, setContactList] = useState();
   const sendRequest = async () => {
     try {
       const response = await fetch(
