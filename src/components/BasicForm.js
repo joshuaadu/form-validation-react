@@ -34,21 +34,26 @@ const BasicForm = (props) => {
     reset: emailReset
   } = useInput(isEmail);
 
-  // const queryClient = useQueryClient();
-  const mutation = useMutation(async (contact) => {
-    const response = await fetch(
-      "https://react-form-fd387-default-rtdb.firebaseio.com/contact-list.json",
-      {
-        method: "POST",
-        body: JSON.stringify(contact),
-        headers: {
-          "Content-Type": "application/json"
+  const queryClient = useQueryClient();
+  const mutation = useMutation(
+    async (contact) => {
+      const response = await fetch(
+        "https://react-form-fd387-default-rtdb.firebaseio.com/contact-list.json",
+        {
+          method: "POST",
+          body: JSON.stringify(contact),
+          headers: {
+            "Content-Type": "application/json"
+          }
         }
-      }
-    );
+      );
 
-    return await response.json();
-  });
+      return await response.json();
+    },
+    {
+      onSuccess: () => queryClient.invalidateQueries("contacts")
+    }
+  );
 
   const formIsValid = emailIsValid && firstNameIsValid && lastNameIsValid;
 
