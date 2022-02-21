@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useMutation, useQueryClient } from "react-query";
 
 import CustomInput from "./CustomInput";
@@ -59,6 +60,13 @@ const BasicForm = (props) => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries("contacts");
+        console.log("Contact submitted!", mutation.data);
+        firstNameReset("");
+        lastNameReset("");
+        emailReset("");
+      },
+      onError: () => {
+        console.log("Failed to submit!");
       }
     }
   );
@@ -75,15 +83,6 @@ const BasicForm = (props) => {
       email: emailValue
     };
     mutation.mutate(newContact);
-    (async () => {
-      (await mutation.isSuccess)
-        ? console.log("Contact submitted!", mutation.data)
-        : console.log("Failed to submit!");
-    })();
-
-    firstNameReset("");
-    lastNameReset("");
-    emailReset("");
   };
   return (
     <form onSubmit={submitHandler}>
